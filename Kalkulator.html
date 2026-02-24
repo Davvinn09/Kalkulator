@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Baris & Deret Aritmatika</title>
+    <style>
+        body{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            background:linear-gradient(135deg,#1e3c72,#2a5298);
+            font-family:Arial;
+        }
+
+        .calculator{
+            background:white;
+            padding:25px;
+            border-radius:15px;
+            width:350px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        h3{
+            text-align:center;
+            margin-bottom:15px;
+        }
+
+        .display{
+            width:100%;
+            min-height:60px;
+            background:black;
+            color:Yellow;
+            font-size:16px;
+            padding:10px;
+            border-radius:10px;
+            margin-bottom:15px;
+            box-sizing:border-box;
+        }
+
+        input{
+            width:100%;
+            padding:8px;
+            margin-bottom:10px;
+            border-radius:8px;
+            border:1px solid #ccc;
+        }
+
+        .buttons{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:10px; #ccc
+        }
+
+        button{
+            padding:10px;
+            border:none;
+            border-radius:8px;
+            font-weight:bold;
+            cursor:pointer;
+            color:white;
+        }
+
+        .blue{ background:#3498db; }
+        .green{ background:#2ecc71; }
+        .orange{ background:#f39c12; }
+        .red{ background:#e74c3c; }
+
+        button:hover{ opacity:0.8; }
+
+        .creator{
+            text-align:center;
+            margin-top:15px;
+            font-size:15px;
+            color:#555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <h3 style="color:red">Kalkulator Baris & Deret Aritmatika</h3>
+
+    <div class="display" id="hasil">Hasil</div>
+
+    <input type="number" id="a" placeholder="Suku Pertama (a)">
+    <input type="number" id="b" placeholder="Beda (b)">
+    <input type="number" id="n" placeholder="Jumlah Suku (n)">
+    <input type="number" id="Un" placeholder="Suku ke-n (Un)">
+
+    <div class="buttons">
+        <button class="blue" onclick="tampilBaris()">Baris</button>
+        <button class="blue" onclick="hitungUn()">Cari Un</button>
+        <button class="orange" onclick="hitungSn()">Cari Sn</button>
+        <button class="orange" onclick="cariBeda()">Cari b</button>
+        <button class="green" onclick="cariA()">Cari a</button>
+        <button class="green" onclick="cariN()">Cari n</button>
+        <button class="red" onclick="resetSemua()">Reset</button>
+    </div>
+
+    <div class="creator">CREATED BY ADHITYA</div>
+</div>
+
+<script>
+
+function ambil(id){
+    return parseFloat(document.getElementById(id).value);
+}
+
+function tampilPesan(pesan){
+    document.getElementById("hasil").innerHTML = pesan;
+}
+
+function tampilBaris(){
+    let a = ambil("a");
+    let b = ambil("b");
+    let n = ambil("n");
+
+    if(isNaN(a) || isNaN(b) || isNaN(n)){
+        tampilPesan("Isi a, b, dan n terlebih dahulu!");
+        return;
+    }
+
+    let baris = "";
+    for(let i=0;i<n;i++){
+        baris += (a + i*b) + " ";
+    }
+
+    tampilPesan("Baris Aritmatika:<br>" + baris);
+}
+
+function hitungUn(){
+    let a = ambil("a");
+    let b = ambil("b");
+    let n = ambil("n");
+
+    if(isNaN(a) || isNaN(b) || isNaN(n)){
+        tampilPesan("Isi a, b, dan n terlebih dahulu!");
+        return;
+    }
+
+    let Un = a + (n-1)*b;
+    tampilPesan("Suku ke-"+n+" = " + Un);
+}
+
+function hitungSn(){
+    let a = ambil("a");
+    let b = ambil("b");
+    let n = ambil("n");
+
+    if(isNaN(a) || isNaN(b) || isNaN(n)){
+        tampilPesan("Isi a, b, dan n terlebih dahulu!");
+        return;
+    }
+
+    let Sn = (n/2)*(2*a + (n-1)*b);
+    tampilPesan("Jumlah Deret (Sn) = " + Sn);
+}
+
+function cariBeda(){
+    let a = ambil("a");
+    let Un = ambil("Un");
+    let n = ambil("n");
+
+    if(isNaN(a) || isNaN(Un) || isNaN(n)){
+        tampilPesan("Isi a, Un, dan n terlebih dahulu!");
+        return;
+    }
+
+    let b = (Un - a)/(n-1);
+    tampilPesan("Beda (b) = " + b);
+}
+
+function cariA(){
+    let b = ambil("b");
+    let Un = ambil("Un");
+    let n = ambil("n");
+
+    if(isNaN(b) || isNaN(Un) || isNaN(n)){
+        tampilPesan("Isi b, Un, dan n terlebih dahulu!");
+        return;
+    }
+
+    let a = Un - (n-1)*b;
+    tampilPesan("Suku Pertama (a) = " + a);
+}
+
+function cariN(){
+    let a = ambil("a");
+    let b = ambil("b");
+    let Un = ambil("Un");
+
+    if(isNaN(a) || isNaN(b) || isNaN(Un)){
+        tampilPesan("Isi a, b, dan Un terlebih dahulu!");
+        return;
+    }
+
+    if(b === 0){
+        tampilPesan("Beda (b) tidak boleh 0!");
+        return;
+    }
+
+    let n = ((Un - a)/b) + 1;
+    tampilPesan("Jumlah Suku (n) = " + n);
+}
+
+function resetSemua(){
+    document.getElementById("a").value="";
+    document.getElementById("b").value="";
+    document.getElementById("n").value="";
+    document.getElementById("Un").value="";
+    tampilPesan("Hasil akan muncul di sini");
+}
+
+</script>
+
+</body>
+</html>
